@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Start a dev tmux session with all repos opened in windows
+tmux new -s Dev -n bees \;  \
+  split-window -h -p 40 \; \
+  split-window -v  \; \
+  send-keys 'cd projects/bees' C-m \; \
+  select-pane -U \; \
+  send-keys 'cd projects/bees' C-m \; \
+  select-pane -L \; \
+  send-keys 'cd projects/bees' C-m \; \
+  new-window -n hbcrm -t Dev: \; \
+  split-window -h -p 40 \; \
+  split-window -v \; \
+  send-keys 'cd projects/hbcrm' C-m \; \
+  select-pane -U \; \
+  send-keys 'cd projects/hbcrm' C-m \; \
+  select-pane -L \; \
+  send-keys 'cd projects/hbcrm' C-m \; \
+  new-window -n hbcat -t Dev: \; \
+  split-window -h -p 40 \; \
+  split-window -v \; \
+  send-keys 'cd projects/hbcat' C-m \; \
+  select-pane -U \; \
+  send-keys 'cd projects/hbcat' C-m \; \
+  select-pane -L \; \
+  send-keys 'cd projects/hbcat' C-m \; \
+  new-window -n pd -t Dev: \; \
+  split-window -h -p 40  \; \
+  split-window -v \; \
+  send-keys 'cd projects/pd' C-m \; \
+  select-pane -U \; \
+  send-keys 'cd projects/pd' C-m \; \
+  select-pane -L \; \
+  send-keys 'cd projects/pd' C-m \; \
+  new-window -n hb-ansible -t Dev: \; \
+  split-window -h -p 40  \; \
+  split-window -v \; \
+  send-keys 'cd projects/hb-ansible' C-m \; \
+  select-pane -U \; \
+  send-keys 'cd projects/hb-ansible' C-m \; \
+  select-pane -L \; \
+  send-keys 'cd projects/hb-ansible' C-m \; \
+
