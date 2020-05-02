@@ -20,6 +20,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'davidhalter/jedi-vim'
 Plug 'https://github.com/leafgarland/typescript-vim.git'
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'vim-airline/vim-airline'
 call plug#end()
 
 
@@ -49,3 +50,24 @@ au BufRead,BufNewFile *.py,*pyw set shiftwidth=4
 au BufRead,BufNewFile *.py,*.pyw set expandtab
 
 autocmd FileType typescript setlocal formatprg=prettier\ --parser\ typescript
+
+set autoread
+let g:NERDTreeShowHidden=1
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+" bind \ (backward slash) to grep shortcut
+command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+
+nnoremap \ :Ag<SPACE>
+
