@@ -43,5 +43,7 @@ function logf () {
 
 set -o vi
 
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 alias tmux="TERM=screen-256color-bce tmux -2"
-export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -l -g ""'
+# export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
