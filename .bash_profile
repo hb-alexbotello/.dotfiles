@@ -10,14 +10,6 @@ eval "$(pyenv init -)"
 
 set -o vi
 
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-    . "$HOME/.bashrc"
-    fi
-fi
-
-
 function set_virtualenv () {
    if test -z "$VIRTUAL_ENV" ; then
        PYTHON_VIRTUALENV=""
