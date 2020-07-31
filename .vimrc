@@ -21,11 +21,10 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'arcticicestudio/nord-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'Xuyuanp/nerdtree-git-plugin'
-" Plug 'davidhalter/jedi-vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'ianks/vim-tsx'
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'mhinz/vim-signify'
 call plug#end()
 
 
@@ -85,11 +84,11 @@ set nowritebackup
 set updatetime=300
 set shortmess+=c
 
-if has("patch-8.1.1564")
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
+" if has("patch-8.1.1564")
+"   set signcolumn=number
+" else
+"   set signcolumn=yes
+" endif
 
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
@@ -164,3 +163,7 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
+" #SIGNIFY
+" Check for only Git
+let g:signify_vcs_list = [ 'git' ]
+hi Normal guibg=NONE ctermbg=NONE
