@@ -9,7 +9,8 @@ function set_virtualenv () {
 set_virtualenv
 
 orange=$(tput setaf 166);
-yellow=$(tput setaf 227);
+# yellow=$(tput setaf 227);
+purple=$(tput setaf 135);
 green=$(tput setaf 118);
 white=$(tput setaf 16);
 bold=$(tput bold);
@@ -18,7 +19,8 @@ reset=$(tput sgr0);
 PS1="\[${bold}\]\n";
 PS1="\[${PYTHON_VIRTUALENV}\]";
 PS1+="\u@\h ";
-PS1+="\[${yellow}\]\w";
+# PS1+="\[${yellow}\]\w";
+PS1+="\[${purple}\]\w";
 PS1+="\[${reset}\]> ";
 export PS1;
 

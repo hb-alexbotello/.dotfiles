@@ -1,12 +1,8 @@
 set nu
 inoremap jj <Esc>
 
-set encoding=utf-8
-set relativenumber
 map <Space> <leader>
 
-set autochdir
-set modifiable
 
 
 call plug#begin('~/.vim/plugged')
@@ -25,10 +21,34 @@ Plug 'leafgarland/typescript-vim'
 Plug 'ianks/vim-tsx'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'mhinz/vim-signify'
+Plug 'flazz/vim-colorschemes'
+Plug 'ryanoasis/vim-devicons'
+Plug 'aswathkk/darkscene.vim'
 call plug#end()
 
+set relativenumber
+set nobackup
+set nowritebackup
+set noswapfile
+set number
+set mouse=a
+set shiftwidth=4
+set expandtab
+set tabstop=4
+set softtabstop=4
+set nowrap
+set cursorline
+set termguicolors
+set hidden
+set noshowmode
+set autochdir
+set modifiable
+set encoding=utf-8
+syntax enable
 
-colorscheme nord
+
+colorscheme darkscene
+" colorscheme nord
 syntax on
 
 nmap <Leader>f :GFiles<CR>
@@ -63,7 +83,6 @@ command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-h
 nnoremap \ :Rg<Space>
 
 set shortmess=a
-set termguicolors
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
@@ -167,3 +186,8 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 " Check for only Git
 let g:signify_vcs_list = [ 'git' ]
 hi Normal guibg=NONE ctermbg=NONE
+if has("termguicolors")
+		    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+		    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+     set termguicolors
+endif
