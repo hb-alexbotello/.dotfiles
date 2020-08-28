@@ -1,3 +1,8 @@
+export TERM=screen-256color
+export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/libnsl/lib"
+export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/libnsl/include"
+export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/libnsl/lib/pkgconfig"
+
 function set_virtualenv () {
    if test -z "$VIRTUAL_ENV" ; then
        PYTHON_VIRTUALENV=""
@@ -25,23 +30,13 @@ PS1+="\[${reset}\]> ";
 export PS1;
 
 
-export GREP_OPTIONS='--color=always'
-export GREP_COLOR='1;36'
 
+alias grep='grep --color=always -i'
 alias dc="docker-compose"
 alias date="gdate"
-source ~/.config/bashlog/bashlog.sh
+export GREP_COLOR='1;36'
 
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
-
-function logf () {
-   if [ $# -eq 0 ]; then
-    echo "No search term given"
-   else
-    term=$1
-    grep -s "${term}" ~/Notes/{*,.*}
-   fi
-}
 
 set -o vi
 
@@ -49,3 +44,6 @@ set -o vi
 alias tmux="TERM=screen-256color-bce tmux -2"
 # export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
+
+export GOPATH="$HOME/.go"
+export PATH="$PATH:$GOPATH/bin:$GOROOT/bin"

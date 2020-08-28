@@ -1,3 +1,4 @@
+export TERM=screen-256color
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export WORKON_HOME=$HOME/.virtualenvs
@@ -35,23 +36,13 @@ PS1+="\[${reset}\]> ";
 export PS1;
 
 
-export GREP_OPTIONS='--color=always'
-export GREP_COLOR='1;36'
 
 alias dc="docker-compose"
 alias date="gdate"
-source ~/.config/bashlog/bashlog.sh
+alias grep='grep --color=always -i'
+export GREP_COLOR='1;36'
 
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
-
-function logf () {
-   if [ $# -eq 0 ]; then
-    echo "No search term given"
-   else
-    term=$1
-    grep -s "${term}" ~/Notes/{*,.*}
-   fi
-}
 
 set -o vi
 

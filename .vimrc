@@ -3,7 +3,11 @@ inoremap jj <Esc>
 
 map <Space> <leader>
 
-
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -24,6 +28,8 @@ Plug 'mhinz/vim-signify'
 Plug 'flazz/vim-colorschemes'
 Plug 'ryanoasis/vim-devicons'
 Plug 'aswathkk/darkscene.vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 
 set relativenumber
@@ -44,13 +50,13 @@ set noshowmode
 set autochdir
 set modifiable
 set encoding=utf-8
-syntax enable
-
-
-colorscheme darkscene
-" colorscheme nord
+filetype plugin on
 syntax on
 
+" colorscheme darkscene
+colorscheme darkscene
+
+syntax enable
 nmap <Leader>f :GFiles<CR>
 nmap <Leader>F :Files<CR>
 
@@ -191,3 +197,15 @@ if has("termguicolors")
 		    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
      set termguicolors
 endif
+
+hi! Normal ctermbg=NONE guibg=NONE
+hi! NonText ctermbg=NONE guibg=NONE
+
+" vim-go syntak highlighting settings
+let g:go_highlight_structs = 1 
+let g:go_highlight_methods = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
