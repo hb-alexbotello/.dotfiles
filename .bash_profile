@@ -4,6 +4,7 @@ export LANG=en_US.UTF-8
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
 export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+# export VIRTUALENVWRAPPER_PYTHON=/Users/alexbotello/.pyenv/shims/python3
 export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
 source /usr/local/bin/virtualenvwrapper.sh
 
@@ -48,3 +49,5 @@ set -o vi
 
 alias tmux="TERM=screen-256color-bce tmux -2"
 source "$HOME/.bashrc"
+
+complete -C /usr/local/bin/terraform terraform

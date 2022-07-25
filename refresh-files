@@ -1,6 +1,9 @@
 #!/bin/bash
 
-cp ~/.vimrc ./.vimrc
+cp -r ~/.config/nvim ./.config/
+cp -r ~/.config/karabiner ./.config/
+rm -rf ./.config/karabiner/automatic_backups
 cp ~/.bashrc ./.bashrc
 cp ~/.bash_profile ./.bash_profile
 cp ~/.tmux.conf ./.tmux.conf
+cp ~/dev-session ./dev-session
