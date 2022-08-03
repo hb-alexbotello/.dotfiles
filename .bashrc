@@ -1,3 +1,4 @@
+export PATH="$HOME/Library/Python/3.8/bin:/opt/homebrew/bin:$PATH"
 export TERM=screen-256color
 # export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/libnsl/lib"
 # export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/libnsl/include"
