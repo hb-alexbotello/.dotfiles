@@ -36,8 +36,14 @@ return require('packer').startup(function()
   }
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' } 
 
+  -- Harpoon (marks on steroids)
+  use {
+      'ThePrimeagen/harpoon',
+      requires = { {'nvim-lua/plenary.nvim'} }
+  }
+
   -- Git
-  -- use "tpope/vim-fugitive"
+  use "tpope/vim-fugitive"
   use {
       'tanvirtin/vgit.nvim',
       requires = {
@@ -46,11 +52,11 @@ return require('packer').startup(function()
   }
 
   -- File Tree
-  use {
-      'kyazdani42/nvim-tree.lua',
-      requires = {
-        'kyazdani42/nvim-web-devicons', -- optional, for file icons
-      },
-      tag = 'nightly' -- optional, updated every week. (see issue #1193)
-  }
+  -- use {
+  --     'kyazdani42/nvim-tree.lua',
+  --     requires = {
+  --       'kyazdani42/nvim-web-devicons', -- optional, for file icons
+  --     },
+  --     tag = 'nightly' -- optional, updated every week. (see issue #1193)
+  -- }
 end)

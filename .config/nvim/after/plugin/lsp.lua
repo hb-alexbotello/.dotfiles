@@ -1,5 +1,5 @@
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -48,6 +48,12 @@ require('lspconfig')['gopls'].setup{
     on_attach = on_attach,
     flags = lsp_flags,
 }
+
+require'lspconfig'.terraformls.setup{}
+vim.api.nvim_create_autocmd({"BufWritePre"}, {
+  pattern = {"*.tf", "*.tfvars"},
+  callback = vim.lsp.buf.formatting_sync,
+})
 --
 -- luasnip setup
 local luasnip = require 'luasnip'
@@ -92,3 +98,10 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+
+-- auto format go code on file save
+vim.cmd[[autocmd BufWritePre *.go lua vim.lsp.buf.formatting()]]
+
+-- auto format terraform code on file save
+vim.cmd[[autocmd BufWritePre *.tfvars lua vim.lsp.buf.formatting_sync()]]
+vim.cmd[[autocmd BufWritePre *.tf lua vim.lsp.buf.formatting_sync()]]
