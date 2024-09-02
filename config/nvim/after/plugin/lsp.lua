@@ -49,12 +49,37 @@ require('lspconfig')['gopls'].setup{
     flags = lsp_flags,
 }
 
-require'lspconfig'.terraformls.setup{}
-vim.api.nvim_create_autocmd({"BufWritePre"}, {
-  pattern = {"*.tf", "*.tfvars"},
-  callback = vim.lsp.buf.formatting_sync,
-})
---
+require'lspconfig'.rust_analyzer.setup{
+  on_attach = on_attach,
+  flags = lsp_flags,
+  settings = {
+    ['rust-analyzer'] = {
+      diagnostics = {
+        enable = false;
+      }
+    }
+  }
+}
+
+require('lspconfig')['gleam'].setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+}
+
+
+-- local pid = vim.fn.getpid()
+-- local omnisharp_bin = "/usr/local/bin/omnisharp-roslyn/OmniSharp"
+require("lspconfig").omnisharp.setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+  -- cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) }
+}
+
+-- require'lspconfig'.terraformls.setup{
+--   on_attach = on_attach,
+--   flags = lsp_flags,
+-- }
+
 -- luasnip setup
 local luasnip = require 'luasnip'
 
@@ -100,8 +125,11 @@ cmp.setup {
 }
 
 -- auto format go code on file save
-vim.cmd[[autocmd BufWritePre *.go lua vim.lsp.buf.formatting()]]
+vim.cmd([[autocmd BufWritePre *.go lua vim.lsp.buf.format({ async = true })]])
+vim.cmd([[autocmd BufWritePre *.gleam lua vim.lsp.buf.format({ async = true })]])
+
+vim.cmd([[autocmd BufWritePre *.rs lua vim.lsp.buf.format({ async = true })]])
 
 -- auto format terraform code on file save
-vim.cmd[[autocmd BufWritePre *.tfvars lua vim.lsp.buf.formatting_sync()]]
-vim.cmd[[autocmd BufWritePre *.tf lua vim.lsp.buf.formatting_sync()]]
+vim.cmd([[autocmd BufWritePre *.tfvars lua vim.lsp.buf.format({ async = true })]])
+vim.cmd([[autocmd BufWritePre *.tf lua vim.lsp.buf.format({ async = true })]])

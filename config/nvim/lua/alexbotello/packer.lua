@@ -19,9 +19,10 @@ return require('packer').startup(function()
         run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
   }
 
-  -- Darkscene colorscheme
   -- use 'aswathkk/darkscene.vim'
-  use 'folke/tokyonight.nvim'
+  use "folke/tokyonight.nvim"
+  use "EdenEast/nightfox.nvim"
+  use "AlexvZyl/nordic.nvim"
 
   -- Vim Surround
   use 'tpope/vim-surround'
@@ -31,7 +32,7 @@ return require('packer').startup(function()
 
   -- Telescope
   use {
-      'nvim-telescope/telescope.nvim', tag = '0.1.0',
+      'nvim-telescope/telescope.nvim', tag = '0.1.6',
       requires = { {'nvim-lua/plenary.nvim'} }
   }
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' } 
@@ -50,6 +51,8 @@ return require('packer').startup(function()
         'nvim-lua/plenary.nvim'
       }
   }
+
+  use "stevearc/oil.nvim"
 
   -- File Tree
   -- use {

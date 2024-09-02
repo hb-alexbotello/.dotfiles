@@ -1,0 +1,65 @@
+term xterm-kitty
+startup_session /Users/alexbotello/.config/kitty/startup.conf
+
+# BEGIN_KITTY_THEME
+# Black Metal
+include current-theme.conf
+# END_KITTY_THEME
+
+# BEGIN_KITTY_FONTS
+font_family      family="Monaco"
+bold_font        auto
+italic_font      auto
+bold_italic_font auto
+# END_KITTY_FONTS
+font_size         17.0
+
+# HotKey Remaps
+kitty_mod       cmd
+map ctrl+r      load_config_file
+map kitty_mod+n new_window
+map ctrl+n      next_window
+
+map kitty_mod+t combine : new_tab : set_tab_title
+map kitty_mod+1 goto_tab 1
+map kitty_mod+2 goto_tab 2
+map kitty_mod+3 goto_tab 3
+map kitty_mod+4 goto_tab 4
+map kitty_mod+5 goto_tab 5
+map kitty_mod+6 goto_tab 6
+
+# Window Settings
+# active_border_color        #44ffff
+background_opacity         0.85
+single_window_margin_width 0
+enabled_layouts            Tall, *
+window_margin_width        7
+window_border_width        1pt
+window_padding_width       10
+
+# Bell
+enable_audio_bell    yes
+visual_bell_duration 0.5
+bell_on_tab          "🔔 "
+
+
+# Tab Bar
+tab_bar_edge              top
+tab_bar_margin_width      10
+tab_bar_margin_height     15 0
+tab_bar_style             powerline
+tab_powerline_style       round
+tab_fade                  5
+
+# Tab Colors
+# active_tab_foreground   #000000
+# active_tab_background   #E3B75D
+active_tab_font_style   bold-italic
+# inactive_tab_foreground #444
+# inactive_tab_background #999
+inactive_tab_font_style normal
+
+
+# MISC
+macos_option_as_alt yes
+disable_ligatures   always

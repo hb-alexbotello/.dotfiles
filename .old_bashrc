@@ -1,0 +1,71 @@
+export PATH="$HOME/Library/Python/3.8/bin:/opt/homebrew/bin:$PATH"
+export PATH="$(pyenv which python | xargs dirname):$PATH"
+export TERM=xterm-kitty
+
+# export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/libnsl/lib"
+# export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/libnsl/include"
+# export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/libnsl/lib/pkgconfig"
+export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
+export PKG_CONFIG_PATH="/usr/local/opt/openssl@1.1/lib/pkgconfig"
+
+function set_virtualenv () {
+   if test -z "$VIRTUAL_ENV" ; then
+       PYTHON_VIRTUALENV=""
+   else
+	PYTHON_VIRTUALENV="${BLUE}(`basename \"$VIRTUAL_ENV\"`)${COLOR_NONE} "
+   fi
+}
+set_virtualenv
+
+# orange=$(tput setaf 166);
+# purple=$(tput setaf 135);
+# green=$(tput setaf 118);
+# white=$(tput setaf 16);
+# bold=$(tput bold);
+# reset=$(tput sgr0);
+
+# PS1="\[${bold}\]\n";
+# PS1="\[${PYTHON_VIRTUALENV}\]";
+# PS1+="\u@\h ";
+# # PS1+="\[${yellow}\]\w";
+# PS1+="\[${purple}\]\w";
+# PS1+="\[${reset}\]> ";
+# export PS1;
+
+parse_git_branch() {
+  git branch 2>/dev/null | grep '\*' | sed 's/* //'
+}
+
+git_status() {
+  local status
+  status=$(git status --porcelain 2>/dev/null | wc -l | tr -d ' ')
+  if [ "$status" -gt 0 ]; then
+    echo "±$status"
+  fi
+}
+
+# PS1="\[\e[38;5;207m\]\w\[\e[m\] \[\e[38;5;148m\]\$(parse_git_branch | tr -d ' *')\[\e[m\]\$(git_status)\[\e[m\] \$ "
+
+PS1='\[\033[7m\]$\[\033[m\] '
+
+
+alias vim='nvim'
+alias grep='grep --color=always -i'
+alias dc="docker-compose"
+alias date="gdate"
+alias tf="terraform"
+export GREP_COLOR='1;36'
+
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -l ""'
+
+export GOPATH="$HOME/.go"
+export GOROOT="$(brew --prefix golang)/libexec"
+export PATH="$PATH:$GOPATH/bin:$GOROOT/bin"
+export PATH=$PATH:$HOME/dotnet
+
+export DOTNET_ROOT=/usr/local/share/dotnet/dotnet

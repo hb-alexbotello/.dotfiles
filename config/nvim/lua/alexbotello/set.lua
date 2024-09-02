@@ -20,3 +20,5 @@ vim.opt.smartindent = true
 vim.opt.wrap = false
 
 vim.opt.backspace = "indent,eol,start"
+
+vim.opt.swapfile = false
