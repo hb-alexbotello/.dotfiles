@@ -15,9 +15,6 @@ alias python='python3'
 # Run Kitty with a specified session
 alias kitty='kitty --session ~/.config/kitty/startup.conf'
 
-# auto suggestions for zsh
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
 
@@ -32,4 +29,20 @@ export GOPATH="$HOME/.go"
 export GOROOT="$(brew --prefix golang)/libexec"
 export PATH="$PATH:$GOPATH/bin:$GOROOT/bin"
 
+# auto suggestions for zsh
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Setup bindings for both smkx and rmkx key variants
+# Home
+bindkey '\e[H'  beginning-of-line
+bindkey '\eOH'  beginning-of-line
+# End
+bindkey '\e[F'  end-of-line
+bindkey '\eOF'  end-of-line
+# Up
+bindkey '\e[A' up-line-or-search
+bindkey '\eOA' up-line-or-search
+# Down
+bindkey '\e[B' down-line-or-search
+bindkey '\eOB' down-line-or-search
