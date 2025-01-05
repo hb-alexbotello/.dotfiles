@@ -3,7 +3,7 @@ require'nvim-treesitter.configs'.setup {
   ensure_installed = {"lua", "go", "typescript", "python", "rust", "yaml", "dockerfile", "json", "javascript", "tsx", "hcl", "zig", "c_sharp", "gleam"},
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
-  sync_install = false,
+  sync_install = true,
 
   -- Automatically install missing parsers when entering buffer
   auto_install = true,
@@ -17,6 +17,5 @@ require'nvim-treesitter.configs'.setup {
     -- Instead of true it can also be a list of languages
 
     additional_vim_regex_highlighting = true,
-    -- additional_vim_regex_highlighting = false,
   },
 }

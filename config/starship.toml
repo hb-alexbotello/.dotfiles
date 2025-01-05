@@ -1,3 +1,15 @@
+format = """
+$directory\
+$git_branch\
+$python\
+$terraform\
+$golang\
+$dotnet\
+$rust\
+$js\
+$shell
+$character"""
+
 [aws]
 format = '\[[$symbol($profile)(\($region\))(\[$duration\])]($style)\]'
 
@@ -53,7 +65,7 @@ format = '\[[$symbol($version)]($style)\]'
 format = '\[[$symbol$branch]($style)\]'
 
 [gcloud]
-format = '\[[☁️ $account(@$domain)(\($region\))]($style)\]'
+format = '\[[$symbol$account(@$domain)(\($region\))]($style)\]'
 
 [git_branch]
 format = '\[[$symbol$branch]($style)\]'
@@ -189,3 +201,4 @@ format = '\[[$symbol($version)]($style)\]'
 
 [solidity]
 format = '\[[$symbol($version)]($style)\]'
+

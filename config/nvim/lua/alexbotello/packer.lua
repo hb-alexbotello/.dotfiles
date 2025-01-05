@@ -11,7 +11,7 @@ return require('packer').startup(function()
   use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
   use 'hrsh7th/cmp-nvim-lsp' -- LSP source for nvim-cmp
   use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
-  use 'L3MON4D3/LuaSnip' -- Snippets plugin
+  use { 'L3MON4D3/LuaSnip', run = "make install_jsregexp" } -- Snippets plugin
 
   -- Treesitter
   use {
@@ -19,11 +19,12 @@ return require('packer').startup(function()
         run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
   }
 
-  -- use 'aswathkk/darkscene.vim'
-  use "folke/tokyonight.nvim"
+  use 'aswathkk/darkscene.vim'
   use "EdenEast/nightfox.nvim"
   use "AlexvZyl/nordic.nvim"
-
+  use "rebelot/kanagawa.nvim"
+  use "sho-87/kanagawa-paper.nvim"
+  
   -- Vim Surround
   use 'tpope/vim-surround'
 

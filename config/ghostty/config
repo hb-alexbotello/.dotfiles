@@ -1,0 +1,65 @@
+# MacOS specific
+macos-icon = custom-style
+macos-icon-frame = chrome
+macos-icon-ghost-color = #e07d13
+macos-titlebar-style = transparent
+auto-update = download
+
+# Themes, Windows, and Colors
+theme = Kanagawa Dragon
+selection-background = #585b70
+selection-foreground = #cdd6f4
+cursor-color = #f5e0dc
+cursor-text = #cdd6f4
+palette = 0=#45475a
+palette = 1=#f38ba8
+palette = 2=#a6e3a1
+palette = 3=#f9e2af
+palette = 4=#89b4fa
+palette = 5=#f5c2e7
+palette = 6=#94e2d5
+palette = 7=#a6adc8
+palette = 8=#585b70
+palette = 9=#f37799
+palette = 10=#89d88b
+palette = 11=#ebd391
+palette = 12=#74a8fc
+palette = 13=#74a8fc
+palette = 14=#94e2d5
+palette = 15=#bac2de
+background-opacity = 0.94
+background-blur-radius = 10
+window-theme = dark
+window-padding-color = extend-always
+window-padding-x = 6
+window-padding-y = 6
+window-padding-balance = true
+window-decoration = true
+window-vsync = true
+window-save-state = always
+window-colorspace = display-p3
+quick-terminal-screen = macos-menu-bar
+
+# Fonts
+font-family = Monaco
+font-thicken = true
+font-size = 17.0
+adjust-underline-position = 10%
+cursor-color = #cccccc 
+bold-is-bright = true
+term = xterm-256color
+
+# Custom Keybindings
+keybind = cmd+shift+r=reload_config
+keybind = ctrl+n=goto_split:next
+keybind = cmd+n=new_split:auto
+keybind = cmd+left=resize_split:left,20
+keybind = cmd+right=resize_split:right,20
+keybind = cmd+t=new_tab
+
+# Misc
+shell-integration = zsh
+custom-shader-animation = true
+mouse-shift-capture = true
+clipboard-read = allow
+clipboard-write = allow

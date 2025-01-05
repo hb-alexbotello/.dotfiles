@@ -2,7 +2,7 @@ term xterm-kitty
 startup_session /Users/alexbotello/.config/kitty/startup.conf
 
 # BEGIN_KITTY_THEME
-# kanagawabones
+# Base2Tone Field Dark
 include current-theme.conf
 # END_KITTY_THEME
 
@@ -15,7 +15,6 @@ bold_italic_font auto
 font_size         17.0
 # hide the underline on named files and dirs
 modify_font underline_thickness -1%
-text_composition_strategy platform
 
 # HotKey Remaps
 kitty_mod       cmd
@@ -57,12 +56,12 @@ tab_fade              1 1
 tab_bar_align         center
 
 # Tab Colors
-# active_tab_foreground   #3be380
+active_tab_foreground   #3be380
 active_tab_font_style   bold
 inactive_tab_font_style normal
 
 # Cursor
-# cursor                     #cccccc
+cursor                     #cccccc
 cursor_shape               block
 cursor_shape_unfocused     hollow
 cursor_beam_thickness      1.5
@@ -73,5 +72,5 @@ macos_option_as_alt yes
 disable_ligatures   always
 copy_on_select      yes
 mouse_hide_wait     -1
-# url_color           #0087bd
+url_color           #0087bd
 url_style           curly

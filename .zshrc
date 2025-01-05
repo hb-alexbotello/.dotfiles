@@ -3,7 +3,9 @@ export PATH="~/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:$PATH"
 
 # Add all pyenv python's into the PATH
 export PATH="$(pyenv which python | xargs dirname):$PATH"
-export TERM=xterm-256color
+export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin/"
+
+[[ -n "$DISPLAY" && "$TERM" = "xterm" ]] && export TERM=xterm-256color
 
 # Needed for Poetry
 export SHELL=/bin/zsh
