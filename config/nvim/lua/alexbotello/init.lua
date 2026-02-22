@@ -1,3 +1,3 @@
 require("alexbotello.set")
-require("alexbotello.packer")
+require("alexbotello.lazy")
 require("alexbotello.remap")

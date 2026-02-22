@@ -37,6 +37,7 @@ require('kanagawa').setup({
               --   special3   = palette.dragonRed,
               -- },
               syn = {
+                -- string   = "#b6927b",
                 string   = "#a292a3", -- dragonPink
                 number   = "#87a987", -- dragonGreen
                 constant = "#c4b28a", -- dragonYellow
@@ -176,11 +177,150 @@ vim.api.nvim_set_hl(0, 'CursorLineNr', { bg = 'NONE' })
 -- Make the sign column transparent
 vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'NONE' })
 
--- vim.cmd("colorscheme darkscene")
--- vim.cmd("colorscheme nordic")
--- vim.cmd("colorscheme nordfox")
--- vim.cmd("colorscheme kanagawa-dragon")
-vim.cmd("colorscheme kanagawa")
+-- Default colorscheme
+-- vim.cmd("colorscheme kanagawa")
+
+-- Seoulbones settings (pre-configure before loading)
+vim.g.seoulbones_italic_comments = false
+vim.g.seoulbones_italic_strings = false
+vim.g.zenbones_solid_line_nr = true
+
+-- Function to apply seoulbones with custom overrides for Zig files
+local function apply_zig_colorscheme()
+  vim.cmd("colorscheme seoulbones")
+
+  -- Override string and comment colors (muted coral)
+  vim.api.nvim_set_hl(0, "String", { fg = "#d8b0a0" })
+  vim.api.nvim_set_hl(0, "@string", { fg = "#d8b0a0" })
+  vim.api.nvim_set_hl(0, "Comment", { fg = "#d8b0a0" })
+  vim.api.nvim_set_hl(0, "@comment", { fg = "#d8b0a0" })
+
+  -- Make type declarations white like variables
+  vim.api.nvim_set_hl(0, "Type", { fg = "#f0f0f0" })
+  vim.api.nvim_set_hl(0, "@type", { fg = "#f0f0f0" })
+  vim.api.nvim_set_hl(0, "@type.builtin", { fg = "#f0f0f0" })
+
+  -- Make constructors and enum literals white
+  vim.api.nvim_set_hl(0, "@constructor", { fg = "#f0f0f0" })
+  vim.api.nvim_set_hl(0, "@constant.builtin", { fg = "#f0f0f0" })
+  vim.api.nvim_set_hl(0, "@punctuation.special", { fg = "#f0f0f0" })
+  vim.api.nvim_set_hl(0, "@variable.member", { fg = "#f0f0f0" })
+  vim.api.nvim_set_hl(0, "@field", { fg = "#f0f0f0" })
+  vim.api.nvim_set_hl(0, "@property", { fg = "#f0f0f0" })
+  vim.api.nvim_set_hl(0, "@module", { fg = "#f0f0f0" })
+  vim.api.nvim_set_hl(0, "@namespace", { fg = "#f0f0f0" })
+  vim.api.nvim_set_hl(0, "@lsp.type.namespace", { fg = "#f0f0f0" })
+
+  -- Functions with subtle punch (pale yellow)
+  vim.api.nvim_set_hl(0, "Function", { fg = "#e8d6aa" })
+  vim.api.nvim_set_hl(0, "@function", { fg = "#e8d6aa" })
+  vim.api.nvim_set_hl(0, "@function.call", { fg = "#e8d6aa" })
+  vim.api.nvim_set_hl(0, "@function.method", { fg = "#e8d6aa" })
+  vim.api.nvim_set_hl(0, "@method", { fg = "#e8d6aa" })
+  vim.api.nvim_set_hl(0, "@method.call", { fg = "#e8d6aa" })
+
+  -- Visual and Search highlights
+  vim.api.nvim_set_hl(0, "Visual", { bg = "#3d3a50" })     -- dusty purple
+  vim.api.nvim_set_hl(0, "Search", { bg = "#3d3a50", fg = "#ffffff" })
+  vim.api.nvim_set_hl(0, "IncSearch", { bg = "#4a3a5a", fg = "#ffffff" })
+
+  -- Transparent background
+  vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
+  vim.api.nvim_set_hl(0, "LineNr", { bg = "NONE" })
+  vim.api.nvim_set_hl(0, "CursorLineNr", { bg = "NONE" })
+  vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE" })
+  vim.api.nvim_set_hl(0, "CursorLine", { bg = "#1e2a3a" })
+end
+
+-- Function to restore default colorscheme
+local function apply_default_colorscheme()
+  vim.cmd("colorscheme kanagawa")
+
+  -- Orange Comments
+  
+  -- vim.api.nvim_set_hl(0, "Comment", { fg = "#d8b0a0" })
+  -- vim.api.nvim_set_hl(0, "@comment", { fg = "#d8b0a0" })
+
+  vim.api.nvim_set_hl(0, "Comment", { fg = "#b8a098" })
+  vim.api.nvim_set_hl(0, "@comment", { fg = "#b8a098" })
+
+  -- vim.api.nvim_set_hl(0, "Comment", { fg = "#a89088" })
+  -- vim.api.nvim_set_hl(0, "@comment", { fg = "#a89088" })
+
+
+  -- White Constants
+  vim.api.nvim_set_hl(0, "Constant", { fg = "#e4e4e4" })
+  vim.api.nvim_set_hl(0, "@constant", { fg = "#e4e4e4" })
+  vim.api.nvim_set_hl(0, "@lsp.type.constant", { fg = "#e4e4e4" })
+  -- vim.api.nvim_set_hl(0, "@lsp.type.constant", { fg = "#f0f0f0" })
+  
+  -- White struct fields/attributes
+  vim.api.nvim_set_hl(0, "@field", { fg = "#f0f0f0" })
+  vim.api.nvim_set_hl(0, "@property", { fg = "#f0f0f0" })
+  vim.api.nvim_set_hl(0, "@variable.member", { fg = "#f0f0f0" })
+
+  -- White Variables
+  vim.api.nvim_set_hl(0, "@variable", { fg = "#d4d4d4" })
+  vim.api.nvim_set_hl(0, "Identifier", { fg = "#d4d4d4" })
+  vim.api.nvim_set_hl(0, "@variable.parameter", { fg = "#d4d4d4" })
+  vim.api.nvim_set_hl(0, "@parameter", { fg = "#d4d4d4" })
+
+
+  -- Purple Modules
+  vim.api.nvim_set_hl(0, "@module", { fg = "#9090c0" })
+
+  -- -- Green Types
+  -- vim.api.nvim_set_hl(0, "Type", { fg = "#8cc8c8" })
+  -- vim.api.nvim_set_hl(0, "@type", { fg = "#8cc8c8" })
+  -- vim.api.nvim_set_hl(0, "@type.builtin", { fg = "#8cc8c8" })
+
+  -- Steel cyan Types
+  vim.api.nvim_set_hl(0, "Type", { fg = "#8cb8c8" })
+  vim.api.nvim_set_hl(0, "@type", { fg = "#8cb8c8" })
+  vim.api.nvim_set_hl(0, "@type.builtin", { fg = "#8cb8c8" })
+
+  -- Yellow Functions
+  vim.api.nvim_set_hl(0, "Function", { fg = "#e8d6aa" })
+  vim.api.nvim_set_hl(0, "@function", { fg = "#e8d6aa" })
+  vim.api.nvim_set_hl(0, "@function.call", { fg = "#e8d6aa" })
+  vim.api.nvim_set_hl(0, "@function.method", { fg = "#e8d6aa" })
+  vim.api.nvim_set_hl(0, "@method", { fg = "#e8d6aa" })
+  vim.api.nvim_set_hl(0, "@method.call", { fg = "#e8d6aa" })
+
+  -- Earthy clay Booleans and Operators
+  vim.api.nvim_set_hl(0, "Boolean", { fg = "#c89080" })
+  vim.api.nvim_set_hl(0, "@boolean", { fg = "#c89080" })
+  vim.api.nvim_set_hl(0, "Operator", { fg = "#c89080" })
+  vim.api.nvim_set_hl(0, "@operator", { fg = "#c89080" })
+  vim.api.nvim_set_hl(0, "@keyword.operator", { fg = "#c89080" })
+
+  -- Visual and Search highlights
+  vim.api.nvim_set_hl(0, "Visual", { bg = "#3d3a50" })     -- dusty purple
+  vim.api.nvim_set_hl(0, "Search", { bg = "#3d3a50", fg = "#ffffff" })
+  vim.api.nvim_set_hl(0, "IncSearch", { bg = "#4a3a5a", fg = "#ffffff" })
+
+  -- Transparent background
+  vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
+  vim.api.nvim_set_hl(0, "LineNr", { bg = "NONE" })
+  vim.api.nvim_set_hl(0, "CursorLineNr", { bg = "NONE" })
+  vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE" })
+end
+
+-- Autocommands for Zig files
+-- vim.api.nvim_create_augroup("ZigColorscheme", { clear = true })
+-- vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+--   group = "ZigColorscheme",
+--   pattern = "*.zig",
+--   callback = apply_zig_colorscheme,
+-- })
+-- vim.api.nvim_create_autocmd("BufLeave", {
+--   group = "ZigColorscheme",
+--   pattern = "*.zig",
+--   callback = apply_default_colorscheme,
+-- })
+
 
 -- Set the background to transparent
 vim.cmd[[
@@ -189,6 +329,7 @@ hi Normal guibg=NONE ctermbg=NONE
 
 ---- Set highlight background to be light gray
 vim.api.nvim_set_hl(0, "Visual", { bg = "#4B5263" })
+-- vim.api.nvim_set_hl(0, "Visual", { bg = "#ffe7be" })
 
 -- Set highlight background for LSP diagnostic to be transparent
 vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#FF0000", bg = "NONE" })
@@ -199,5 +340,20 @@ vim.api.nvim_set_hl(0, 'CursorLineNr', { bg = 'NONE' })
 -- Make the sign column transparent
 vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'NONE' })
 
+-- vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#1e2228' })
+vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#1e2a3a' })
+
 vim.opt.termguicolors = true
 vim.opt.winblend = 30
+vim.opt.cursorline = true
+
+-- Fix Snacks.nvim window bg
+vim.api.nvim_set_hl(0, "SnacksNotifierInfo", { bg = "NONE" })
+vim.api.nvim_set_hl(0, "SnacksNotifierWarn", { bg = "NONE" })  
+vim.api.nvim_set_hl(0, "SnacksNotifierError", { bg = "NONE" })
+vim.api.nvim_set_hl(0, "SnacksTerminal", { link = "Normal" })
+
+-- General floating window fix
+vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
+
+apply_default_colorscheme()

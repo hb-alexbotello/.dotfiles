@@ -1,6 +1,10 @@
 -- local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
+-- Disable zig.vim's auto-formatting to avoid conflicts with ZLS
+vim.g.zig_fmt_parse_errors = 0
+vim.g.zig_fmt_autosave = 0
+
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
@@ -67,14 +71,122 @@ require('lspconfig')['gleam'].setup{
     flags = lsp_flags,
 }
 
+require('lspconfig').zls.setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+    root_dir = function(fname)
+        local util = require('lspconfig.util')
+        return util.root_pattern('build.zig', '.git')(fname)
+    end,
+    on_new_config = function(config, root_dir)
+        -- Try to find zig in the project directory first
+        local project_zig = root_dir .. '/zig/zig'
+        local project_lib = root_dir .. '/zig/lib'
 
--- local pid = vim.fn.getpid()
--- local omnisharp_bin = "/usr/local/bin/omnisharp-roslyn/OmniSharp"
-require("lspconfig").omnisharp.setup {
+        -- Check if project-local zig exists
+        if vim.fn.filereadable(project_zig) == 1 then
+            config.settings.zls.zig_exe_path = project_zig
+            config.settings.zls.zig_lib_path = project_lib
+        else
+            -- Fall back to system zig (let zls auto-detect or use system PATH)
+            config.settings.zls.zig_exe_path = nil
+            config.settings.zls.zig_lib_path = nil
+        end
+    end,
+    settings = {
+        zls = {
+            -- Completion settings
+            enable_snippets = true,
+            enable_argument_placeholders = true,
+            completion_label_details = true,
+
+            -- Build settings
+            enable_build_on_save = true,
+            build_on_save_args = {},
+
+            -- Semantic tokens
+            semantic_tokens = "full",  -- "none", "partial", or "full"
+
+            -- Inlay hints
+            inlay_hints_show_variable_type_hints = true,
+            inlay_hints_show_struct_literal_field_type = true,
+            inlay_hints_show_parameter_name = true,
+            inlay_hints_show_builtin = true,
+            inlay_hints_exclude_single_argument = true,
+            inlay_hints_hide_redundant_param_names = false,
+            inlay_hints_hide_redundant_param_names_last_token = false,
+
+            -- Style and diagnostics
+            warn_style = false,
+            highlight_global_var_declarations = true,
+
+            -- Performance settings
+            skip_std_references = false,
+            prefer_ast_check_as_child_process = true,
+
+            -- Advanced settings (usually left as nil for auto-detection)
+            builtin_path = nil,
+            build_runner_path = nil,
+            global_cache_path = nil,
+
+            -- Legacy/workaround settings
+            force_autofix = false
+        }
+    }
+}
+
+require'lspconfig'.omnisharp.setup {
   on_attach = on_attach,
   flags = lsp_flags,
-  -- cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) }
+  cmd = { "dotnet", "/usr/local/omnisharp/OmniSharp.dll" },
+
+  settings = {
+    FormattingOptions = {
+      -- Enables support for reading code style, naming convention and analyzer
+      -- settings from .editorconfig.
+      EnableEditorConfigSupport = true,
+      -- Specifies whether 'using' directives should be grouped and sorted during
+      -- document formatting.
+      OrganizeImports = nil,
+    },
+    MsBuild = {
+      -- If true, MSBuild project system will only load projects for files that
+      -- were opened in the editor. This setting is useful for big C# codebases
+      -- and allows for faster initialization of code navigation features only
+      -- for projects that are relevant to code that is being edited. With this
+      -- setting enabled OmniSharp may load fewer projects and may thus display
+      -- incomplete reference lists for symbols.
+      LoadProjectsOnDemand = nil,
+    },
+    RoslynExtensionsOptions = {
+      -- Enables support for roslyn analyzers, code fixes and rulesets.
+      EnableAnalyzersSupport = nil,
+      -- Enables support for showing unimported types and unimported extension
+      -- methods in completion lists. When committed, the appropriate using
+      -- directive will be added at the top of the current file. This option can
+      -- have a negative impact on initial completion responsiveness,
+      -- particularly for the first few completion sessions after opening a
+      -- solution.
+      EnableImportCompletion = nil,
+      -- Only run analyzers against open files when 'enableRoslynAnalyzers' is
+      -- true
+      AnalyzeOpenDocumentsOnly = nil,
+    },
+    Sdk = {
+      -- Specifies whether to include preview versions of the .NET SDK when
+      -- determining which version to use for project loading.
+      IncludePrereleases = true,
+    },
+  },
 }
+
+-- local omnisharp_bin = "/usr/local/omnisharp/OmniSharp.dll"
+-- require("lspconfig").omnisharp.setup {
+--   on_attach = on_attach,
+--   flags = lsp_flags,
+--   cmd = { "dotnet", omnisharp_bin},
+--   -- cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) }
+-- }
 
 -- require'lspconfig'.terraformls.setup{
 --   on_attach = on_attach,
@@ -134,3 +246,29 @@ vim.cmd([[autocmd BufWritePre *.rs lua vim.lsp.buf.format({ async = true })]])
 -- auto format terraform code on file save
 vim.cmd([[autocmd BufWritePre *.tfvars lua vim.lsp.buf.format({ async = true })]])
 vim.cmd([[autocmd BufWritePre *.tf lua vim.lsp.buf.format({ async = true })]])
+
+-- auto format zig code on file save
+vim.cmd([[autocmd BufWritePre *.zig lua vim.lsp.buf.format({ async = false })]])
+vim.cmd([[autocmd BufWritePre *.zon lua vim.lsp.buf.format({ async = false })]])
+
+-- Add source.fixAll on save
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = {"*.zig", "*.zon"},
+    callback = function()
+        vim.lsp.buf.code_action({
+            context = { only = { "source.fixAll" } },
+            apply = true,
+        })
+    end,
+})
+
+-- Add source.organizeImports on save (requires ZLS 0.14+)
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+--     pattern = {"*.zig", "*.zon"},
+--     callback = function()
+--         vim.lsp.buf.code_action({
+--             context = { only = { "source.organizeImports" } },
+--             apply = true,
+--         })
+--     end,
+-- })

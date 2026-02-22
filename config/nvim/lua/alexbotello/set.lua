@@ -22,3 +22,10 @@ vim.opt.wrap = false
 vim.opt.backspace = "indent,eol,start"
 
 vim.opt.swapfile = false
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "markdown",
+    callback = function()
+        vim.opt_local.wrap = true
+    end,
+})
