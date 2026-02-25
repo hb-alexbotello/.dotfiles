@@ -9,15 +9,23 @@ import (
 )
 
 func isDangerousRmCommand(command string) bool {
-	// Regex pattern to match rm commands with various flags and arguments
-	// Matches: rm, rm -rf, rm -f, rm --recursive, etc.
-	pattern := `^\s*rm\s+([-\w]*\s+)*.+`
-
-	matched, err := regexp.MatchString(pattern, command)
-	if err != nil {
-		return false
+	// Regex patterns to match only recursive rm commands
+	// Matches: rm -rf, rm --recursive, rm -r, etc.
+	patterns := []string{
+		`^\s*rm\s+.*-r.*`,
+		`^\s*rm\s+.*--recursive\b.*`,
 	}
-	return matched
+
+	for _, pattern := range patterns {
+		matched, err := regexp.MatchString(pattern, command)
+		if err != nil {
+			continue
+		}
+		if matched {
+			return true
+		}
+	}
+	return false
 }
 
 func isDangerousSudoCommand(command string) bool {
@@ -42,6 +50,48 @@ func isDangerousADOCommand(command string) bool {
 		`^\s*ado\s+releases\s+definitions\s+delete\s+\S+.*`,
 		`^\s*ado\s+releases\s+deploy\s+\S+.*`,
 	}
+	for _, pattern := range patterns {
+		matched, err := regexp.MatchString(pattern, command)
+		if err != nil {
+			continue
+		}
+		if matched {
+			return true
+		}
+	}
+	return false
+}
+
+func isDangerousGitCommand(command string) bool {
+	// Regex patterns to match dangerous git commands
+	patterns := []string{
+		// git push --force (and variations)
+		`^\s*git\s+push\s+.*--force\b.*`,
+		`^\s*git\s+push\s+.*-f\b.*`,
+		// git branch --delete (and variations)
+		`^\s*git\s+branch\s+.*--delete\b.*`,
+		`^\s*git\s+branch\s+.*-d\b.*`,
+		`^\s*git\s+branch\s+.*-D\b.*`,
+		// git reset --hard
+		`^\s*git\s+reset\s+.*--hard\b.*`,
+		// git clean with force
+		`^\s*git\s+clean\s+.*-f.*`,
+		`^\s*git\s+clean\s+.*--force\b.*`,
+		// git checkout --force
+		`^\s*git\s+checkout\s+.*--force\b.*`,
+		`^\s*git\s+checkout\s+.*-f\b.*`,
+		// git rebase --interactive (potentially destructive)
+		`^\s*git\s+rebase\s+.*--interactive\b.*`,
+		`^\s*git\s+rebase\s+.*-i\b.*`,
+		// git filter-branch (rewrites history)
+		`^\s*git\s+filter-branch\b.*`,
+		// git reflog expire
+		`^\s*git\s+reflog\s+expire\b.*`,
+		// git gc with aggressive pruning
+		`^\s*git\s+gc\s+.*--prune=now\b.*`,
+		`^\s*git\s+gc\s+.*--aggressive\b.*`,
+	}
+
 	for _, pattern := range patterns {
 		matched, err := regexp.MatchString(pattern, command)
 		if err != nil {
@@ -79,6 +129,11 @@ func main() {
 
 	if isDangerousADOCommand(hookData.ToolInput.Command) {
 		fmt.Fprintf(os.Stderr, "Illegal use of 'ado' command: %s", hookData.ToolInput.Command)
+		os.Exit(2)
+	}
+
+	if isDangerousGitCommand(hookData.ToolInput.Command) {
+		fmt.Fprintf(os.Stderr, "Illegal use of 'git' command: %s", hookData.ToolInput.Command)
 		os.Exit(2)
 	}
 
